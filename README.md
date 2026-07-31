@@ -1,0 +1,4 @@
+﻿# MFSInventory
+
+New project scaffold.
+
