@@ -3,271 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MFS Inventory System</title>
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --primary-hover: #1d4ed8;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-color: #1e293b;
-            --border-color: #cbd5e1;
-            --error-color: #ef4444;
-        }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            width: 100%;
-            max-width: 400px;
-            padding: 2rem;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-        /* View States */
-        .view {
-            display: none;
-        }
-        .view.active {
-            display: block;
-        }
-        /* Form Styles */
-        h2 {
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            font-weight: 700;
-            text-align: center;
-            color: var(--text-color);
-        }
-        .input-group {
-            margin-bottom: 1.25rem;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-        input {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        button {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: var(--primary-hover);
-        }
-        .error-msg {
-            margin-top: 1rem;
-            color: var(--error-color);
-            font-size: 0.875rem;
-            text-align: center;
-            min-height: 1.25rem;
-        }
-        /* Landing / Options Styles */
-        .options-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        .option-btn {
-            background-color: #ffffff;
-            color: var(--text-color);
-            border: 2px solid var(--border-color);
-            padding: 1rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-        }
-        .option-btn:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
-            background-color: #f1f5f9;
-        }
-        .back-container {
-            margin-top: 1.5rem;
-            text-align: center;
-        }
-        .back-btn, .logout-btn {
-            background-color: transparent;
-            color: #64748b;
-            border: 1px solid var(--border-color);
-            width: auto;
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-        }
-        .back-btn:hover, .logout-btn:hover {
-            background-color: #f1f5f9;
-            color: var(--text-color);
-        }
-        .logout-container {
-            margin-top: 2rem;
-            text-align: center;
-        }
-        .logout-btn {
-            color: var(--error-color);
-            border-color: var(--error-color);
-        }
-        .logout-btn:hover {
-            background-color: var(--error-color);
-            color: white;
-        }
-    </style>
+    <title>Inventory Management App</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <!-- Main Login View -->
-        <div id="loginView" class="view active">
-            <h2>System Login</h2>
-            <form id="loginForm" onsubmit="handleLogin(event)">
-                <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" required autocomplete="username">
-                </div>
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" required autocomplete="current-password">
-                </div>
-                <button type="submit">Log In</button>
-                <div id="errorMsg" class="error-msg"></div>
-            </form>
+<body class="bg-gray-100 flex items-center justify-center h-screen m-0">
+    <!-- Login Screen -->
+    <div id="login-screen" class="bg-white p-8 rounded-xl shadow-md w-full max-w-sm">
+        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Sign In</h2>
+        
+        <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                <input type="text" id="username" required 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <input type="password" id="password" required 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <p id="error-msg" class="text-red-500 text-sm hidden">Invalid username or password.</p>
+            <button type="submit" 
+                class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-200">
+                Log In
+            </button>
+        </form>
+    </div>
+    <!-- Screen 1: Location Selection (Buffalo / Rochester) -->
+    <div id="location-screen" class="hidden text-center w-full max-w-md p-6">
+        <h1 class="text-3xl font-extrabold text-gray-800 mb-6">Nick is a dick</h1>
+        <p class="text-gray-600 mb-6">Select a location to continue:</p>
+        
+        <div class="space-y-4 mb-6">
+            <button onclick="selectLocation('Buffalo')" 
+                class="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition duration-200 shadow-md">
+                Buffalo
+            </button>
+            <button onclick="selectLocation('Rochester')" 
+                class="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition duration-200 shadow-md">
+                Rochester
+            </button>
         </div>
-        <!-- Landing Page View (Tire vs All Other Inventory) -->
-        <div id="landingView" class="view">
-            <h2>Select Inventory</h2>
-            <p style="text-align: center; color: #64748b; font-size: 0.9rem; margin-bottom: 1rem;">Choose an inventory system to access:</p>
-            <div class="options-list">
-                <button class="option-btn" onclick="startSubLogin('Tire Inventory')">Tire Inventory</button>
-                <button class="option-btn" onclick="startSubLogin('All Other Inventory')">All Other Inventory</button>
-            </div>
-            <div class="logout-container">
-                <button class="logout-btn" onclick="handleLogout()">Log Out</button>
-            </div>
+        <button onclick="handleLogout()" 
+            class="px-6 py-2 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition duration-200">
+            Log Out
+        </button>
+    </div>
+    <!-- Screen 2: Tire Brands Menu (Goodyear, Michelin, Bridgestone) -->
+    <div id="brands-screen" class="hidden text-center w-full max-w-md p-6">
+        <h1 id="selected-location-title" class="text-2xl font-bold text-gray-800 mb-2">Location</h1>
+        <p class="text-gray-600 mb-6">Select a tire brand inventory:</p>
+        
+        <div class="space-y-4 mb-6">
+            <button onclick="selectBrand('Goodyear')" 
+                class="w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold text-lg hover:bg-indigo-700 transition duration-200 shadow-md">
+                Goodyear
+            </button>
+            <button onclick="selectBrand('Michelin')" 
+                class="w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold text-lg hover:bg-indigo-700 transition duration-200 shadow-md">
+                Michelin
+            </button>
+            <button onclick="selectBrand('Bridgestone')" 
+                class="w-full py-3 bg-indigo-600 text-white rounded-lg font-semibold text-lg hover:bg-indigo-700 transition duration-200 shadow-md">
+                Bridgestone
+            </button>
         </div>
-        <!-- Sub-Login View (For Tire / All Other Inventory) -->
-        <div id="subLoginView" class="view">
-            <h2 id="subLoginTitle">Inventory Login</h2>
-            <form id="subLoginForm" onsubmit="handleSubLogin(event)">
-                <div class="input-group">
-                    <label for="subUsername">Username</label>
-                    <input type="text" id="subUsername" required autocomplete="username">
-                </div>
-                <div class="input-group">
-                    <label for="subPassword">Password</label>
-                    <input type="password" id="subPassword" required autocomplete="current-password">
-                </div>
-                <button type="submit">Log In</button>
-                <div id="subErrorMsg" class="error-msg"></div>
-            </form>
-            <div class="back-container">
-                <button class="back-btn" onclick="switchView('landingView')">Back to Selection</button>
-            </div>
-        </div>
-        <!-- Main Inventory Page View (Buffalo vs Rochester) -->
-        <div id="mainInventoryView" class="view">
-            <h2 id="inventoryTitle">Main Inventory</h2>
-            <p style="text-align: center; color: #64748b; font-size: 0.9rem; margin-bottom: 1rem;">Select a location:</p>
-            <div class="options-list">
-                <button class="option-btn" onclick="selectLocation('Buffalo')">Buffalo</button>
-                <button class="option-btn" onclick="selectLocation('Rochester')">Rochester</button>
-            </div>
-            <div class="back-container">
-                <button class="back-btn" onclick="switchView('landingView')">Back to Inventory Selection</button>
-            </div>
+        <div class="flex justify-between">
+            <button onclick="goBackToLocations()" 
+                class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg font-semibold hover:bg-gray-400 transition duration-200">
+                Back
+            </button>
+            <button onclick="handleLogout()" 
+                class="px-4 py-2 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition duration-200">
+                Log Out
+            </button>
         </div>
     </div>
+    <!-- Screen 3: Brand Details View (Placeholder) -->
+    <div id="inventory-screen" class="hidden text-center w-full max-w-md p-6 bg-white rounded-xl shadow-md">
+        <h2 id="inventory-title" class="text-2xl font-bold text-gray-800 mb-4">Inventory View</h2>
+        <p class="text-gray-600 mb-6">You are viewing inventory details for this selection.</p>
+        
+        <div class="flex justify-between">
+            <button onclick="goBackToBrands()" 
+                class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg font-semibold hover:bg-gray-400 transition duration-200">
+                Back to Brands
+            </button>
+            <button onclick="handleLogout()" 
+                class="px-4 py-2 bg-gray-600 text-white rounded-lg font-semibold hover:bg-gray-700 transition duration-200">
+                Log Out
+            </button>
+        </div>
+    </div>
+    <!-- Floating Zeke AI Assistant Widget -->
+    <div id="zeke-widget" class="hidden fixed bottom-6 right-6 z-50">
+        <!-- Chat Window -->
+        <div id="zeke-window" class="hidden bg-white rounded-2xl shadow-2xl w-80 h-96 flex flex-col mb-4 border border-gray-200 overflow-hidden">
+            <div class="bg-blue-600 text-white px-4 py-3 flex justify-between items-center">
+                <span class="font-semibold text-sm">Zeke AI Assistant</span>
+                <button onclick="toggleZekeChat()" class="text-white hover:text-gray-200 font-bold text-lg">&times;</button>
+            </div>
+            
+            <div id="zeke-chat-log" class="flex-1 overflow-y-auto p-3 space-y-3 text-left">
+                <div class="bg-gray-100 p-3 rounded-lg text-sm text-gray-800 max-w-[85%]">
+                    Hello! I'm Zeke. How can I help you navigate the inventory today?
+                </div>
+            </div>
+            <form onsubmit="handleZekeChat(event)" class="p-3 border-t border-gray-200 flex gap-2 bg-gray-50">
+                <input type="text" id="zeke-input" placeholder="Ask Zeke..." required
+                    class="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button type="submit" 
+                    class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition duration-200">
+                    Send
+                </button>
+            </form>
+        </div>
+        <!-- Floating Action Button -->
+        <button onclick="toggleZekeChat()" 
+            class="bg-blue-600 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center hover:bg-blue-700 transition duration-200 focus:outline-none focus:ring-4 focus:ring-blue-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4z" />
+            </svg>
+        </button>
+    </div>
     <script>
-        // Credentials
-        const ADMIN_USER = "mfsadmin";
-        const ADMIN_PASS = "mfs@Harlem!";
-        const JEFF_USER = "Jeff Barton";
-        const JEFF_PASS = "10@ilShelby";
-        let activeInventoryType = "";
+        let currentLocation = '';
+        let currentBrand = '';
         function handleLogin(event) {
             event.preventDefault();
-            
-            const userInput = document.getElementById("username").value;
-            const passInput = document.getElementById("password").value;
-            const errorMsg = document.getElementById("errorMsg");
-            if (userInput === ADMIN_USER && passInput === ADMIN_PASS) {
-                errorMsg.textContent = "";
-                document.getElementById("loginForm").reset();
-                switchView("landingView");
+            const userInput = document.getElementById('username').value;
+            const passInput = document.getElementById('password').value;
+            const errorMsg = document.getElementById('error-msg');
+            if (userInput === 'mfsadmin' && passInput === 'mfs@Harlem') {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('location-screen').classList.remove('hidden');
+                document.getElementById('zeke-widget').classList.remove('hidden');
             } else {
-                errorMsg.textContent = "Invalid username or password.";
+                errorMsg.classList.remove('hidden');
             }
         }
-        function startSubLogin(inventoryName) {
-            activeInventoryType = inventoryName;
-            document.getElementById("subLoginTitle").textContent = `${inventoryName} Login`;
-            document.getElementById("subLoginForm").reset();
-            document.getElementById("subErrorMsg").textContent = "";
-            switchView("subLoginView");
+        function selectLocation(location) {
+            currentLocation = location;
+            document.getElementById('selected-location-title').textContent = location + " Inventory";
+            document.getElementById('location-screen').classList.add('hidden');
+            document.getElementById('brands-screen').classList.remove('hidden');
         }
-        function handleSubLogin(event) {
-            event.preventDefault();
-            const userInput = document.getElementById("subUsername").value;
-            const passInput = document.getElementById("subPassword").value;
-            const errorMsg = document.getElementById("subErrorMsg");
-            // Allows either mfsadmin or Jeff Barton to log into the sub inventories
-            if ((userInput === ADMIN_USER && passInput === ADMIN_PASS) || 
-                (userInput === JEFF_USER && passInput === JEFF_PASS)) {
-                errorMsg.textContent = "";
-                document.getElementById("subLoginForm").reset();
-                
-                // Take them to the main Inventory page with Buffalo/Rochester options
-                document.getElementById("inventoryTitle").textContent = `${activeInventoryType} - Location`;
-                switchView("mainInventoryView");
-            } else {
-                errorMsg.textContent = "Invalid username or password.";
-            }
+        function selectBrand(brand) {
+            currentBrand = brand;
+            document.getElementById('inventory-title').textContent = currentLocation + " - " + brand + " Inventory";
+            document.getElementById('brands-screen').classList.add('hidden');
+            document.getElementById('inventory-screen').classList.remove('hidden');
         }
-        function selectLocation(locationName) {
-            alert(`Accessing ${locationName} for ${activeInventoryType}! (Hook up your dashboard route here)`);
+        function goBackToLocations() {
+            document.getElementById('brands-screen').classList.add('hidden');
+            document.getElementById('location-screen').classList.remove('hidden');
+        }
+        function goBackToBrands() {
+            document.getElementById('inventory-screen').classList.add('hidden');
+            document.getElementById('brands-screen').classList.remove('hidden');
         }
         function handleLogout() {
-            switchView("loginView");
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('error-msg').classList.add('hidden');
+            
+            document.getElementById('inventory-screen').classList.add('hidden');
+            document.getElementById('brands-screen').classList.add('hidden');
+            document.getElementById('location-screen').classList.add('hidden');
+            document.getElementById('zeke-widget').classList.add('hidden');
+            document.getElementById('zeke-window').classList.add('hidden');
+            
+            document.getElementById('login-screen').classList.remove('hidden');
         }
-        function switchView(viewId) {
-            document.querySelectorAll(".view").forEach(view => {
-                view.classList.remove("active");
-            });
-            document.getElementById(viewId).classList.add("active");
+        function toggleZekeChat() {
+            const zekeWindow = document.getElementById('zeke-window');
+            zekeWindow.classList.toggle('hidden');
+        }
+        function handleZekeChat(event) {
+            event.preventDefault();
+            const zekeInput = document.getElementById('zeke-input');
+            const zekeChatLog = document.getElementById('zeke-chat-log');
+            const userMessage = zekeInput.value.trim();
+            if (!userMessage) return;
+            const userBubble = document.createElement('div');
+            userBubble.className = "bg-blue-600 text-white p-3 rounded-lg text-sm max-w-[85%] ml-auto text-right";
+            userBubble.textContent = userMessage;
+            zekeChatLog.appendChild(userBubble);
+            zekeInput.value = '';
+            zekeChatLog.scrollTop = zekeChatLog.scrollHeight;
+            setTimeout(() => {
+                const zekeBubble = document.createElement('div');
+                zekeBubble.className = "bg-gray-100 p-3 rounded-lg text-sm text-gray-800 max-w-[85%]";
+                zekeBubble.textContent = "I'm Zeke! You asked about: \"" + userMessage + "\".";
+                zekeChatLog.appendChild(zekeBubble);
+                zekeChatLog.scrollTop = zekeChatLog.scrollHeight;
+            }, 500);
         }
     </script>
 </body>
